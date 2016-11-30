@@ -1,0 +1,15 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "C:/xampp/htdocs/MyWebProject",
+			"path_mapping": {"C:/xampp/htdocs/MyWebProject" : "C:/WebProject"}
+		}
+	],
+	"settings": {
+        "xdebug": {
+             "url": "http://webproject.localhost/",
+        }
+    }
+}
