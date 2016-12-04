@@ -45,4 +45,27 @@ if(isset($_POST["selectedStateId"]) && !empty($_POST["selectedStateId"])){
         echo '<option value="">City not available</option>';
     }
 }
+
+if (isset($_GET['term']))
+{
+    echo "<script type='text/javascript'>alert('TERM NOT FOUND');</script>";
+    //get search term
+    $searchTerm = $_GET['term'];
+
+    //get matched data from skills table
+    $query = $db->query("SELECT * FROM city WHERE cty_name LIKE '%".$searchTerm."%' ORDER BY cty_name ASC");
+
+    while ($row = $query->fetch_assoc()) 
+    {
+        $data[] = $row['cty_name'];
+    }
+    //return json data
+    echo json_encode($data);    
+}
+else
+{
+    echo "<script type='text/javascript'>alert('TERM NOT FOUND');</script>";
+}
+
+
 ?>
