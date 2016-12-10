@@ -1,7 +1,6 @@
 <?PHP
 require_once("./include/membersite_config.php");
 require_once("results.php");
-
 if(!$membersite->CheckLogin())
 {
     $membersite->RedirectToURL("login.php");
@@ -21,11 +20,6 @@ if(!$membersite->CheckLogin())
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
-	// $(function() {
-	//     $( "#skills" ).autocomplete({
-	//         source: 'search.php'
-	//     });
-	// });
 	$(document).ready(function(){
 		$( "#searchlocation" ).autocomplete({
 		    source: 'search.php',
@@ -35,7 +29,6 @@ if(!$membersite->CheckLogin())
 			    }
 		});
 	});
-
 </script>
 </head>
 
@@ -68,72 +61,44 @@ if(!$membersite->CheckLogin())
 			
 		</form>
 	</div>
+	<div class="searchview">
 
-	<div class="containerss">
 	    <hgroup class="mb20">
 			<h1>Search Results</h1>
 			<h2 class="lead"><strong class="text-danger">3</strong> results were found for the search for <strong class="text-danger">Lorem</strong></h2>								
 		</hgroup>
 
-	    <section class="col-xs-12 col-sm-6 col-md-12">
-			<article class="search-result row">
-				<div class="col-xs-12 col-sm-12 col-md-3">
-					<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-2">
-					<ul class="meta-search">
-						<li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>
-						<li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
-						<li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li>
-					</ul>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-					<h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						
-	                <span class="plus"><a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
-				</div>
-				<span class="clearfix borda"></span>
-			</article>
-
-			<article class="search-result row">
-						<div class="col-xs-12 col-sm-12 col-md-3">
-							<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/food" alt="Lorem ipsum" /></a>
-						</div>
-						<div class="col-xs-12 col-sm-12 col-md-2">
-							<ul class="meta-search">
-								<li><i class="glyphicon glyphicon-calendar"></i> <span>02/13/2014</span></li>
-								<li><i class="glyphicon glyphicon-time"></i> <span>8:32 pm</span></li>
-								<li><i class="glyphicon glyphicon-tags"></i> <span>Food</span></li>
-							</ul>
-						</div>
-						<div class="col-xs-12 col-sm-12 col-md-7">
-							<h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						
-			                <span class="plus"><a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
-						</div>
-			</article>
-
-			<article class="search-result row">
-				<div class="col-xs-12 col-sm-12 col-md-3">
-					<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/sports" alt="Lorem ipsum" /></a>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-2">
-					<ul class="meta-search">
-						<li><i class="glyphicon glyphicon-calendar"></i> <span>01/11/2014</span></li>
-						<li><i class="glyphicon glyphicon-time"></i> <span>10:13 am</span></li>
-						<li><i class="glyphicon glyphicon-tags"></i> <span>Sport</span></li>
-					</ul>
-				</div>
-				<div class="col-xs-12 col-sm-12 col-md-7">
-					<h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						
-	                <span class="plus"><a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
-				</div>
-				<span class="clearfix border"></span>
-			</article>			
-
-
-		</section>
+		<ul class="searchresultlisting" style="list-style-type: none;">
+			<li class="searchresultlistingitem">
+				<div class="searchresultprofile">
+					<div class="searchresultprofileimage">
+						<img src="http://placehold.it/140x100" alt="Profile View">
+					</div>
+					<div class="searchresultprofiledetail">
+						<h3><a href="http://www.google.com" title="My Title">chvj</a></h3>			
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
+						<p>Category is Driving, Cleaning etc<p>
+						<p>Primary Location is Edinburgh<p>
+						<p>Member since 2013</p>
+					</div>
+				</div>	
+			</li>	
+			<!-- </li>
+				<li class="searchresultlistingitem">
+				<div class="searchresultprofile">
+					<div class="searchresultprofileimage">
+						<img src="http://placehold.it/140x100" alt="Profile View">
+					</div>
+					<div class="searchresultprofiledetail">
+						<h3><a href="http://www.google.com" title="My Title">chvj</a></h3>			
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
+						<p>Category is Driving, Cleaning etc<p>
+						<p>Primary Location is Edinburgh<p>
+						<p>Member since 2013</p>
+					</div>
+				</div>		
+			</li> -->
+		</ul>
 	</div>
 
 	<?php include_once "templates/subscribePanel.php"; ?>
