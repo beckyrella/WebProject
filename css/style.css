@@ -65,6 +65,9 @@ ul li:hover a {
 	color: #30302F;
 }
 */
+nav {
+border-bottom: 1px solid #1253A4;
+}
 
 ul.topnav {
   list-style-type: none;
