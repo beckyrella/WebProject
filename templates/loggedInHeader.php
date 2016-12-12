@@ -6,21 +6,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Logged In Header</title>
 <link href="../css/style.css" rel="stylesheet" type="text/css">
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
 </head>
 
+
 <body>
-<!-- Navigation -->
-  <header> <a href="">
-    <h4 class="logo">BusyBODIES</h4>
-    </a>
-    <nav>
-      <ul>
-        <li><a href="../myDashboard.php">DASHBOARD</a></li>
-        <li><a href="../myAccount.php">ACCOUNT</a></li>
-        <li> <a href="../logout.php">LOG OUT</a></li>
+   <nav>
+      <ul class="topnav" id="myTopnav">
+         <li class="businesslogo"><a href="../myDashboard.php">BusyBODIES</a></li>
+        <li class="nonlogo"><a href="../myDashboard.php">DASHBOARD</a></li>
+        <li class="nonlogo"><a href="../myAccount.php">ACCOUNT</a></li>
+        <li class="nonlogo"><a href="../logout.php">LOG OUT</a></li>
+        <li class="icon">
+          <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+        </li>
       </ul>
     </nav>
-  </header>
 </body>
 
 </html>

@@ -19,13 +19,13 @@ body {
 	background-color: #FFFFFF;
 }
 /* Navigation */
-header {
+/*header {
 	width: 100%;
 	height: 5%;
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #1253A4;
-}
-.logo {
+}*/
+/*.logo {
 	color: #1253A4;
 	font-weight: bold;
 	text-align: undefined;
@@ -64,6 +64,39 @@ ul li a {
 ul li:hover a {
 	color: #30302F;
 }
+*/
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #FFFFFF;
+}
+
+ul.topnav li.businesslogo {float: left;}
+
+ul.topnav li.nonlogo {float: right;}
+
+ul.topnav li a {
+  display: inline-block;
+  color: #1253A4;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: all 0.3s linear;
+  font-size: 14px;
+  font-family: Arial;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+ul.topnav li a:hover {color: #30302F;}
+
+/*ul.topnav li.businesslogo a:hover {float: right;}*/
+
+ul.topnav li.icon {display: none;}
+
 .hero_header {
 	color: #30302f;
 	text-align: center;
@@ -435,7 +468,7 @@ footer {
 
 /* Mobile */
 @media (max-width: 320px) {
-.logo {
+/*.logo {
 	width: 100%;
 	text-align: center;
 	margin-top: 13px;
@@ -461,7 +494,42 @@ nav ul li {
 	margin-left: 0px;
 	width: 100%;
 	text-align: center;
+}*/
+
+ul.topnav li.businesslogo {
+	float: left;
 }
+
+ul.topnav li.nonlogo {float: left;}
+
+ ul.topnav li:not(:first-child) {display: none;}
+
+ ul.topnav li.icon {
+    float: right;
+    display: inline-block;
+  }
+
+  ul.topnav.responsive {position: relative;}
+  ul.topnav.responsive li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  ul.topnav.responsive li {
+    float: none;
+    display: inline;
+  }
+
+  ul.topnav.responsive li.businesslogo {
+    float: none;
+    display: inline;
+  }
+
+  ul.topnav.responsive li a {
+    display: block;
+    text-align: center;
+  }
+
 .text_column {
 	width: 100%;
 	text-align: justify;
@@ -523,7 +591,7 @@ nav ul li {
 
 /* Small Tablets */
 @media (min-width: 321px)and (max-width: 767px) {
-.logo {
+/*.logo {
 	width: 100%;
 	text-align: center;
 	margin-top: 13px;
@@ -556,7 +624,28 @@ nav ul li {
 	text-align: center;
 	padding-top: 8px;
 	padding-bottom: 8px;
-}
+}*/
+
+ul.topnav li:not(:first-child) {display: none;}
+  ul.topnav li.icon {
+    float: right;
+    display: inline-block;
+  }
+
+  ul.topnav.responsive {position: relative;}
+  ul.topnav.responsive li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  ul.topnav.responsive li {
+    float: none;
+    display: inline;
+  }
+  ul.topnav.responsive li a {
+    display: block;
+    text-align: center;
+  }
 .text_column {
 	width: 100%;
 	text-align: left;

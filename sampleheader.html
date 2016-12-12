@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+<!-- <style>
 body {margin:0;}
 ul.topnav {
   list-style-type: none;
@@ -12,6 +13,8 @@ ul.topnav {
 }
 
 ul.topnav li {float: left;}
+
+ul.topnav li.nonlogo {float: right;}
 
 ul.topnav li a {
   display: inline-block;
@@ -28,7 +31,7 @@ ul.topnav li a:hover {background-color: #555;}
 ul.topnav li.icon {display: none;}
 
 @media screen and (max-width:680px) {
-  ul.topnav li {display: none;}
+  ul.topnav li:not(:first-child) {display: none;}
   ul.topnav li.icon {
     float: right;
     display: inline-block;
@@ -51,22 +54,23 @@ ul.topnav li.icon {display: none;}
     text-align: left;
   }
 }
-</style>
+</style> -->
 </head>
 <body>
 
- <header> <a href=""><h4 class="logo">BusyBODIES</h4></a>
+ <!-- <header> <a href=""><h4 class="logo">BusyBODIES</h4></a> -->
     <nav>
       <ul class="topnav" id="myTopnav">
-        <li><a href="../myDashboard.php">DASHBOARD</a></li>
-        <li><a href="../myAccount.php">ACCOUNT</a></li>
-        <li><a href="../logout.php">LOG OUT</a></li>
+        <li class="logo"><a href="">BusyBODIES</a></li>
+        <li class="nonlogo"><a href="../myDashboard.php">DASHBOARD</a></li>
+        <li class="nonlogo"><a href="../myAccount.php">ACCOUNT</a></li>
+        <li class="nonlogo"><a href="../logout.php">LOG OUT</a></li>
         <li class="icon">
           <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
         </li>
       </ul>
     </nav>
-  </header>
+<!--   </header> -->
 
   <div class="after-box">Another box, after the floating boxes...</div>
 

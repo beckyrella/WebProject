@@ -28,7 +28,9 @@
 				<li><a href='login.php'>Login</a></li>
 				<li><a href='accessControlled.php'>A sample member's only page</a></li>
 				<li><a href='accountManagement.php'>Account Management</a></li>
-				<li><a href='sampledropdown.php'>SAMPLE Drop Down List</a></li>				
+				<li><a href='sampledropdown.php'>SAMPLE Drop Down List</a></li>
+				<li><a href='oldindex.php'>OLD index</a></li>
+				<li><a href='sampleheader.html'>sample header</a></li>					
 				</ul>
 			</div>
 		</div>
