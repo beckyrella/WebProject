@@ -9,23 +9,12 @@
 <link rel="stylesheet" type="text/css" href="css/membersite.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
-
 <body>
-	<div class="container"> 
-		<?php include_once "templates/loggedInHeader.php"; ?>
-
-		<div id="main">
-			<form class="form-wrapper">
-			    <input type="text" id="search" placeholder="Search for CSS3, HTML5, jQuery ..." required>
-			   <!--  <input type="text" id="searchlocation" placeholder="Search for CSS3, HTML5, jQuery ..." required> -->
-			    <input type="submit" value="go" id="submit">
-			</form>
-			
-		</div>
-
-		<?php include_once "templates/subscribePanel.php"; ?>
-		<?php include_once "templates/footer.php"; ?>
-	</div>
+	<form class="form-wrapper">
+	    <input type="text" class="search" id="searchkeyword" placeholder="What are you looking for?..." required>
+	    <input type="text" class="search" id="searchlocation" placeholder="Where?..." required>
+	    <input type="submit" value="go" id="submit">
+	</form>
 </body>
 
 </html>
