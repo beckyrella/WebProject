@@ -19,10 +19,12 @@
 		<?php include_once "templates/loggedInHeader.php"; ?>         
 	
 		<div id="main">
+			<?php include_once "templates/bodyMainBanner.php"; ?>      
 			<div id='membersite_content'>
 				<h2>Membership website TRAIL</h2>
 				
 				<ul>
+				<li><a href='templates/searchBar.php'>SearchBar</a></li>
 				<li><a href='register.php'>Register</a></li>
 				<li><a href='confirmRegistration.php'>Confirm registration</a></li>
 				<li><a href='login.php'>Login</a></li>
