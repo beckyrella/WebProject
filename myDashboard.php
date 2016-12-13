@@ -82,22 +82,7 @@ if(!$membersite->CheckLogin())
 						<p>Member since 2013</p>
 					</div>
 				</div>	
-			</li>	
-			<!-- </li>
-				<li class="searchresultlistingitem">
-				<div class="searchresultprofile">
-					<div class="searchresultprofileimage">
-						<img src="http://placehold.it/140x100" alt="Profile View">
-					</div>
-					<div class="searchresultprofiledetail">
-						<h3><a href="http://www.google.com" title="My Title">chvj</a></h3>			
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
-						<p>Category is Driving, Cleaning etc<p>
-						<p>Primary Location is Edinburgh<p>
-						<p>Member since 2013</p>
-					</div>
-				</div>		
-			</li> -->
+			</li>			
 		</ul>
 	</div>
 

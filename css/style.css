@@ -851,5 +851,17 @@ ul.topnav li:not(:first-child) {display: none;}
    margin-right: 0px;
    width: 263px;   
 }
+}
 
+/*autocomplete*/
+body .ui-autocomplete {
+  /* font-family to all */
+  font: bold 16px 'lucida sans', 'trebuchet MS', 'Tahoma';
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-state-active.ui-button:hover 
+{
+  border: 1px solid #1253A4;
+  background: #1253A4;
+  color: #F4F4F2;
 }
