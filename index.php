@@ -25,6 +25,8 @@
 				
 				<ul>
 				<li><a href='templates/searchBar.php'>SearchBar</a></li>
+				<li><a href='newLogin.php'>New Login</a></li>
+				<li><a href='newRegister.php'>New Register</a></li>
 				<li><a href='register.php'>Register</a></li>
 				<li><a href='confirmRegistration.php'>Confirm registration</a></li>
 				<li><a href='login.php'>Login</a></li>
