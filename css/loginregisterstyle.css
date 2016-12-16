@@ -105,3 +105,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
+
+
+/*error display*/
+.errorinfo{
+  font-size: 12px;
+  color: #FF0033;
+  margin: 0 0 15px;
+}
+
+

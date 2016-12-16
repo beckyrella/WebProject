@@ -430,6 +430,7 @@ class Membersite
         $username = $this->SanitizeForSQL($username);
 
 		$nresult = mysqli_query($this->connection, "SELECT * FROM $this->tablename WHERE USR_USERNAME = '$username'") or die(mysqli_error($this->connection));
+
         // check for result 
         $no_of_rows = mysqli_num_rows($nresult);
         if ($no_of_rows > 0) {
@@ -438,7 +439,12 @@ class Membersite
             $encrypted_password = $nresult['USR_PASSWORD'];
             $hash = $this->checkhashSSHA($salt, $password);         
         }
-
+        else
+        {
+            // echo 'Not sent: <pre>'.print_r(error_get_last(), true).'</pre>';
+            $this->HandleError("Username or Password does not match");
+            return false;
+        }
 
         $qry = "Select USR_ID, USR_FIRSTNAME, USR_LASTNAME, USR_EMAILADDRESS from $this->tablename where USR_USERNAME='$username' and USR_PASSWORD='$hash' and USR_VERIFICATIONCODE='y'";
         
@@ -446,8 +452,8 @@ class Membersite
         
         if(!$result || mysqli_num_rows($result) <= 0)
         {
-			echo 'Not sent: <pre>'.print_r(error_get_last(), true).'</pre>';
-            $this->HandleError("Error logging in. The username or password does not match");
+			// echo 'Not sent: <pre>'.print_r(error_get_last(), true).'</pre>';
+            $this->HandleError("Username or Password does not match");
             return false;
         }
         

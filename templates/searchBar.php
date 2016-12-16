@@ -3,8 +3,8 @@ require_once("./include/membersite_config.php");
 require_once("results.php");
 if(!$membersite->CheckLogin())
 {
-    $membersite->RedirectToURL("login.php");
-    exit;
+    // $membersite->RedirectToURL("login.php");
+    // exit;
 }
 ?>
 <!doctype html>
