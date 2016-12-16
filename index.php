@@ -24,6 +24,8 @@
 				<h2>Membership website TRAIL</h2>
 				
 				<ul>
+				newResetPasswordLinkSent
+				<li><a href='newResetPassword.php'>pswd is reset</a></li>
 				<li><a href='templates/searchBar.php'>SearchBar</a></li>
 				<li><a href='newLogin.php'>New Login</a></li>
 				<li><a href='newRegister.php'>New Register</a></li>
@@ -34,7 +36,8 @@
 				<li><a href='accountManagement.php'>Account Management</a></li>
 				<li><a href='sampledropdown.php'>SAMPLE Drop Down List</a></li>
 				<li><a href='oldindex.php'>OLD index</a></li>
-				<li><a href='sampleheader.html'>sample header</a></li>					
+				<li><a href='sampleheader.html'>sample header</a></li>
+				<li><a href='newResetPasswordLinkSent.php'>Resetpwdlinksent</a></li>					
 				</ul>
 			</div>
 		</div>

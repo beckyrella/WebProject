@@ -1,15 +1,16 @@
 <?PHP
 require_once("./include/membersite_config.php");
 
+$emailsent = false;
 if(isset($_POST['submitted']))
 {
-   if($membersite->Login())
+   if($membersite->EmailResetPasswordLink())
    {
-        $membersite->RedirectToURL("loginHome.php");
+        $membersite->RedirectToURL("newResetPasswordLinkSent.php");
+        exit;
    }
 }
 ?>
-
 <!doctype html>
 <html lang="en-US">
 <head>
@@ -26,32 +27,36 @@ $('.message a').click(function(){
 
 <body>
 	<!-- add logo in here  -->
+
 	<div class="login-page">
 	  <div class="form">
-	    <form class="login-form" id='login' action='<?php echo $membersite->GetSelfScript(); ?>' method='post' accept-charset='UTF-8'>
+	    <form class="login-form" id='resetpassword' action='<?php echo $membersite->GetSelfScript(); ?>' method='post' accept-charset='UTF-8'>
 
 	      <input type='hidden' name='submitted' id='submitted' value='1'/>
+
+		  <div>RESET PASSWORD </div>
+
 	      <div><span class='errorinfo' id='errorinfo'><?php echo $membersite->GetErrorMessage(); ?></span></div><br>
 	      
-	      <label for='firstname'>Username</label>
-	      <input type="text" name='username' id='username'/>
+	      <label for='email'>Email Address</label>
+	      <input type="text" name='email' id='email'/>
 	    
-	      <label for='firstname'>Password</label>
-	      <input type="password" name='password' id='password'/>
-	    
-	      <button>login</button>
-	      <p class="message">Not registered? <a href="newRegister.php">Create an account</a></p>
-	      <p class="message">Forgot password? <a href="newresetPasswordRequest.php">Reset password</a></p>
+	      <div class='short_explanation'>Instructions to reset your password will be sent to this email address</div><br>
+
+	      <button type='submit' name='Submit'>Reset Password</button>
+	      
 	    </form>	    
 	  </div>
 	</div>
 
 	<script type='text/javascript'>
-		var formvalidator  = new Validator("login");
+		var formvalidator  = new Validator("resetpassword");
 		formvalidator.EnableOnPageErrorDisplay();
 		formvalidator.EnableMsgsTogether();
-		formvalidator.addValidation("username","req","Username Required");
-		formvalidator.addValidation("password","req","Password Required");
+
+		formvalidator.addValidation("email","req","Please provide the email address used to sign-up");
+		formvalidator.addValidation("email","email","Please provide the email address used to sign-up");
+
 	</script>
 
 </body>

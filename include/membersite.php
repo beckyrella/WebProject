@@ -549,12 +549,10 @@ class Membersite
 
         if(!$result || mysqli_num_rows($result) <= 0)
         {
-            $this->HandleError("There is no user with email: $email");
+            $this->HandleError("This email isn't registered in our system");
             return false;
         }
-        $user_rec = mysqli_fetch_assoc($result);
-
-        
+        $user_rec = mysqli_fetch_assoc($result);       
         return true;
     }
     
@@ -625,7 +623,7 @@ class Membersite
         
         $mailer->CharSet = 'utf-8';
         
-        $mailer->AddAddress($email,$user_rec['USR_FIRSTNAME']." ".$user_rc['USR_LASTNAME']);
+        $mailer->AddAddress($email,$user_rec['USR_FIRSTNAME']." ".$user_rec['USR_LASTNAME']);
         
         $mailer->Subject = "Your reset password request at ".$this->sitename;
 
@@ -645,6 +643,7 @@ class Membersite
         
         if(!$mailer->Send())
         {
+            $this->HandleError("Reset Password Instructions failed to send");
             return false;
         }
         return true;
