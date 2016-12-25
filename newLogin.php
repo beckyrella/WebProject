@@ -39,7 +39,7 @@ $('.message a').click(function(){
 	      <label for='firstname'>Password</label>
 	      <input type="password" name='password' id='password'/>
 	    
-	      <button>login</button>
+	      <button type='submit' name='Submit'>login</button>
 	      <p class="message">Not registered? <a href="newRegister.php">Create an account</a></p>
 	      <p class="message">Forgot password? <a href="newresetPasswordRequest.php">Reset password</a></p>
 	    </form>	    

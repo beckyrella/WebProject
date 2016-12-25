@@ -759,12 +759,8 @@ class Membersite
         }
         
         $validator = new FormValidator();
-		// $validator->addValidation("firstname","req","Please fill in your first name");
-        // $validator->addValidation("lastname","req","Please fill in  your last name");
-		// $validator->addValidation("username","req","Please fill in a user name");
+
         $validator->addValidation("profileemail","email","The input for Email should be a valid email value");
-        // $validator->addValidation("email","req","Please fill in your Email");
-  
 		      
         if(!$validator->ValidateForm())
         {

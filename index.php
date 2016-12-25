@@ -24,7 +24,7 @@
 				<h2>Membership website TRAIL</h2>
 				
 				<ul>
-				newResetPasswordLinkSent
+				<li><a href='thankYou.php'>Thank you</a></li>
 				<li><a href='newResetPassword.php'>pswd is reset</a></li>
 				<li><a href='templates/searchBar.php'>SearchBar</a></li>
 				<li><a href='newLogin.php'>New Login</a></li>
