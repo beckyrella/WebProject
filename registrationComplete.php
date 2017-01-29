@@ -1,3 +1,20 @@
+<?PHP
+require_once("include/membersite_config.php");
+if(isset($_POST['submitted']))
+{
+   if($membersite->Login())
+   {
+   		$membersite->RedirectToURL("dashboard.php");
+   }
+   else
+   {
+   	  // echo "<script type=\"text/javascript\">
+		    //         var e = document.getElementById('errorinfossss'); e.hide();
+		    //         </script>";  
+		// echo "<script type=\"text/javascript\">$('#errorinfo').hide()</script>";
+   }
+}
+?>
 <!DOCTYPE html>
 <html class="login-html">
 	<head>
@@ -50,62 +67,69 @@
 		<!-- Head Libs -->
 		<script src="vendor/modernizr/modernizr.js"></script>
 
+		<script type=\"text/javascript\">
+
+			$('#errorinfo').hide();
+
+		</script>
+
 	</head>
 	<body >
 
 		<div class="body register">
-
 			<div role="main" class="main">
-				
 				
 				<section class="account">
 
 					<div class="container">
 						<div class="row">
-              <div class="col-md-12">
-              <div class="center logo-login">
-                <img alt="BusyBodies" width="" height="48" src="img/logo.png">
-              </div>
-                <div class="panel panel-default login-form ">
-                  <!-- Default panel contents -->
-                  <div class="panel-body ">
-                      
-                     <h2 class="">Login</h2>
-                     
-                     <div class="alert alert-danger alert-dismissible" role="alert">
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <strong>Alert!</strong> Wrong email address or password.
-                    </div>
+		              	<div class="col-md-12">
+		              	<div class="center logo-login">
+		                	<img alt="BusyBodies" width="" height="48" src="img/logo.png">
+		              	</div>
+		                <div class="panel panel-default login-form ">
+		                  <!-- Default panel contents -->
+			                <div class="panel-body ">			                      
+			                     <h2 class="">Login</h2>
+			                     
+			                     <div class="alert alert-danger alert-dismissible" id="dismissableerror" role="alert">
+				                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				                      <strong>Email Verified!</strong>
+			                    </div>
+			                   
+			                    <form id='login' action='<?php echo $membersite->GetSelfScript(); ?>' method='post' accept-charset='UTF-8'>
 
-                    <form>
-                    <div class="form-group">
-                      <label class="control-label" for="exampleInputEmail1">Email address</label>
-                      <input type="email" class="form-control input-lg" id="exampleInputEmail1" placeholder="Email">
-                    </div>
-                    <div class="form-group has-error">
-                      <a class="pull-right" href="#">(Forgot Password?)</a>
-                      <label class="control-label" for="exampleInputPassword1">Password</label>
-                      <input type="password" class="form-control input-lg" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox"> Remember me
-                      </label>
-                    </div>
-                    <button type="submit" class="btn btn-sec btn-lg btn-block">Submit</button>
-                    <p class="question center">Don't have an account? <a class="" href="#">Create an Account</a>
-                  </form>
+			                    	<input type='hidden' name='submitted' id='submitted' value='1'/>
+			                    	<div><span class='errorinfo' id='errorinfo'><?php echo $membersite->GetErrorMessage(); ?></span></div><br>
 
-                    </div> <!-- End Profile head-->
-       
-                  </div>                     
-                    
-                </div>
-              </div>
+				                    <div class="form-group">
+				                      <label class="control-label" for="username">Username</label>
+				                      <input type="text" class="form-control input-lg" name="username" id="username" placeholder="Username">
+				                    </div>
+				                    <div class="form-group has-error">
+				                      <a class="pull-right" href="resetPasswordRequest.php">(Forgot Password?)</a>
+				                      <label class="control-label" for="password">Password</label>
+				                      <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Password">
+				                    </div>
+				                    <div class="checkbox">
+				                      <label>
+				                        <input type="checkbox"> Remember me
+				                      </label>
+				                    </div>
+				                    <button type="submit" name='Submit' class="btn btn-sec btn-lg btn-block">Login</button>
+				                    <p class="question center">Don't have an account? <a class="" href="signup.php">Create an Account</a>
+			                  	</form>
 
-					</div>
-          
-          </div>
+			                </div> <!-- End Profile head-->
+			       
+		                  </div>                     
+		                    
+		                </div>
+		              </div>
+
+							</div>
+		          
+		          	</div>
 				</section>
 
 		</div>
@@ -156,15 +180,12 @@
      
      	<script>
 	  
-	  $(document).ready(function () {
-
-    
-    $('#myTabs a').click(function (e) {
-      e.preventDefault()
-      $(this).tab('show')
-    })
-    
-    });
+	$(document).ready(function () {
+    	$('#myTabs a').click(function (e) {
+		      e.preventDefault()
+		      $(this).tab('show')
+    	})   
+     });
 
     </script>
 

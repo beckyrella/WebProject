@@ -1,12 +1,25 @@
+<?PHP
+require_once("include/membersite_config.php");
+
+$emailsent = false;
+if(isset($_POST['submitted']))
+{
+   if($membersite->EmailResetPasswordLink())
+   {
+        $membersite->RedirectToURL("resetPasswordLinkSent.php");
+        exit;
+   }
+}
+?>
 <!DOCTYPE html>
-<html class="login-html">
+<html class="resetPasswordRequest-html">
 	<head>
 
 		<!-- Basic -->
 		<meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">	
 
-		<title>BusyBodies - Profile</title>	
+		<title>BusyBodies - Password Reset Request</title>	
 
 		<meta name="keywords" content="BusyBodies" />
 		<meta name="description" content="BusyBodies - Profile">
@@ -54,62 +67,36 @@
 	<body >
 
 		<div class="body register">
-
 			<div role="main" class="main">
-				
 				
 				<section class="account">
 
 					<div class="container">
 						<div class="row">
-              <div class="col-md-12">
-              <div class="center logo-login">
-                <img alt="BusyBodies" width="" height="48" src="img/logo.png">
-              </div>
-                <div class="panel panel-default login-form ">
-                  <!-- Default panel contents -->
-                  <div class="panel-body ">
-                      
-                     <h2 class="">Register for an account</h2>
+		              	<div class="col-md-12">
+		              	<div class="center logo-login">
+		                	<img alt="BusyBodies" width="" height="48" src="img/logo.png">
+		              	</div>
+		                <div class="panel panel-default login-form ">
+		                  <!-- Default panel contents -->
+			                <div class="panel-body ">			                      
+			                     <h2 class="">Password reset Link Sent!</h2>
+			                     
+			                     <div class="alert alert-danger alert-dismissible" role="alert">
+				                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				                      An email has been sent to your email address, containing instructions to reset your password.
+			                    </div>                  
 
-                  <form>
-                    <div class="form-group">
-                      <label class="control-label" for="exampleInputPassword1">First Name</label>
-                      <input type="text" class="form-control input-lg" id="exampleInputPassword1" placeholder="First Name">
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label" for="exampleInputPassword1">Last Name</label>
-                      <input type="text" class="form-control input-lg" id="exampleInputPassword1" placeholder="Last Name">
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label" for="exampleInputPassword1">Username</label>
-                      <input type="text" class="form-control input-lg" id="exampleInputPassword1" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label" for="exampleInputEmail1">Email address</label>
-                      <input type="email" class="form-control input-lg" id="exampleInputEmail1" placeholder="Email">
-                    </div>
-                    <div class="form-group ">
-                      
-                      <label class="control-label" for="exampleInputPassword1">Password</label>
-                      <input type="password" class="form-control input-lg " id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    
-                    
-                    <button type="submit" class="btn btn-sec btn-lg btn-block">Submit</button>
-                    <p class="question center">Already have an account? <a class="" href="#">Log In</a>
-                  </form>
+			                </div> <!-- End Profile head-->
+			       
+		                  </div>                     
+		                    
+		                </div>
+		              </div>
 
-                    </div> <!-- End Profile head-->
-       
-                  </div>                     
-                    
-                </div>
-              </div>
-
-					</div>
-          
-          </div>
+							</div>
+		          
+		          	</div>
 				</section>
 
 		</div>
