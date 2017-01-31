@@ -1,3 +1,22 @@
+<?PHP
+require_once("include/membersite_config.php");
+
+if(!$membersite->CheckLogin())
+{
+    $membersite->RedirectToURL("login.php");
+    exit;
+}
+
+if(isset($_POST['submitted']))
+{
+   if($membersite->UpdatePersonalDetails())
+   {
+     //change to update page saying its being updated
+        //$membersite->RedirectToURL("thankYou.php");
+    echo "Personal Details Updated";
+   }
+}
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -55,54 +74,8 @@
 	<body data-spy="scroll" data-target=".navbar1" data-offset="50">
 
 		<div class="body profile-body">
-			<header id="header" class="header-narrow" data-plugin-options='{"stickyEnabled": true, "stickyEnableOnBoxed": true, "stickyEnableOnMobile": true, "stickyStartAt": 0, "stickySetTop": "0px", "stickyChangeLogo": false}' style="min-height: 1px;">
-				<div class="header-body">
 
-					<div class="header-container container">
-						<div class="header-row">
-							<div class="header-column">
-								<div class="header-logo">
-									<a href="- index.html">
-										<img alt="BusyBodies" width="" height="48" src="img/logo.png">
-									</a>
-								</div>
-							</div>
-							<div class="header-column">
-								<div class="header-row">
-									<div class="header-nav">
-										<button class="btn header-btn-collapse-nav" data-toggle="collapse" data-target=".header-nav-main">
-											<i class="fa fa-bars"></i>
-										</button>
-										<div class="header-nav-main header-nav-main-effect-1 header-nav-main-sub-effect-1 collapse">
-											<nav>
-												<ul class="nav nav-pills" id="mainNav">
-                        
-													<!--<li class="active">
-														<a class="" href="- index.html">Home</a>
-													</li>-->
-                          
-                          <li class="">
-														<a class="" href="#">Sign Up</a>
-													</li>
-
-													<li class="">
-														<a class="" href="#">How it works</a>
-													</li>
-                        
-													<li class="">
-														<a class="" href="#">Login</a>
-													</li>
-                          
-												</ul>
-											</nav>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
+    <?php include_once "template/loggedInHeader.php"; ?>
 
 			<div role="main" class="main">
 				
@@ -129,7 +102,7 @@
                       <div class="col-sm-3 no-padding border-right" style="height: 500px;">
                         <ul id="myTabs" class="nav nav-pills nav-stacked" role="tablist">
                           <li role="presentation" class="active"><a href="#account" aria-controls="account" role="tab" data-toggle="tab">Account Details</a></li>
-                          <li role="presentation"><a href="#personal" aria-controls="personal" role="tab" data-toggle="tab">Personal Info</a></li>
+                          <li role="presentation"><a href="#personal" aria-controls="personal" role="tab" data-toggle="tab">Profile Details</a></li>
                           <li role="presentation"><a href="#password" aria-controls="personal" role="tab" data-toggle="tab">Change Password</a></li>
                           <li role="presentation"><a href="#deactivate" aria-controls="personal" role="tab" data-toggle="tab">Deactivate</a></li>
                         </ul>
@@ -139,69 +112,90 @@
                       <!-- Tab panes -->
                       <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="account">
-                          <h1>Account</h1>
-                          <form class="form-horizontal">
+                          <h1>My Personal Details</h1>
+                          <?php $userdata = $membersite->GetUserDetails() ?>
+                          <form class="form-horizontal" id='updatepersonaldetail' action='<?php echo $membersite->GetSelfScript(); ?>' method='post' accept-charset='  UTF-8'>
+
+                            <input type='hidden' name='submitted' id='submitted' value='1'/>
+                            <input type='hidden'  class='spmhidip' name='<?php echo $membersite->GetSpamTrapInputName(); ?>' />
+                            <div><span class='pflerror'><?php echo $membersite->GetErrorMessage(); ?></span></div>
+
                             <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-3 control-label">Username*</label>
+                              <label for="firstname" class="col-sm-3 control-label">First Name*</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" id="inputUserName" placeholder="Username">
+                                <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" value='<?php echo $userdata['firstname']; ?>' maxlength="50">
                               </div>
                             </div>
                             <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-3 control-label">Email Address*</label>
+                              <label for="lastname" class="col-sm-3 control-label">Last Name*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" value='<?php echo $userdata['lastname']; ?>' maxlength="70">
                               </div>
                             </div>
                             <div class="form-group">
-                              <label for="mobile" class="col-sm-3 control-label">Mobile Number*</label>
+                              <label for="dob" class="col-sm-3 control-label">Date of Birth*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="mobile" placeholder="Mobile Number">
+                                <input type="text" class="form-control" name="dob" id="dob" placeholder="Birthdate" value='<?php echo $userdata['dateofbirth']; ?>' maxlength="50" >
+                              </div>
+                            </div>
+                              <div class="form-group">
+                              <label for="sex" class="col-sm-3 control-label">Gender*</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control" name="sex" id="sex" placeholder="Gender" value='<?php echo $userdata['sex']; ?>' maxlength="50" >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="username" class="col-sm-3 control-label">Username*</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Username" value='<?php echo $userdata['username']; ?>' maxlength="50" >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="email" class="col-sm-3 control-label">Email Address*</label>
+                              <div class="col-sm-7">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" value='<?php echo $userdata['email']; ?>' maxlength="50" >
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="mobilenumber" class="col-sm-3 control-label">Mobile Number*</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control" name="mobilenumber" id="mobilenumber" placeholder="Mobile Number" value='<?php echo $userdata['mobilenumber']; ?>' maxlength="50">
                               </div>
                             </div>
                             <div class="form-group">
                               <label for="address" class="col-sm-3 control-label">Address*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="address" placeholder="Address">
+                                <input type="text" class="form-control" name="address" id="address" placeholder="Address" value='<?php echo $userdata['address']; ?>' maxlength="50" >
                               </div>
                             </div>
-                            <div class="form-group">
+                           <!--  <div class="form-group">
                               <label for="city" class="col-sm-3 control-label">City*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="city" placeholder="City">
+                                <input type="text" class="form-control" name="city" id="city" placeholder="City">
                               </div>
                             </div>
                             <div class="form-group">
                               <label for="state" class="col-sm-3 control-label">State*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="city" placeholder="State">
+                                <input type="text" class="form-control" name="state" id="state" placeholder="State">
                               </div>
                             </div>
                             <div class="form-group">
                               <label for="country" class="col-sm-3 control-label">Country*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="city" placeholder="Country">
+                                <input type="text" class="form-control" name="country" id="country" placeholder="Country">
                               </div>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                               <div class="col-sm-offset-3 col-sm-9">
-                                <div class="checkbox">
-                                  <label>
-                                    <input type="checkbox"> Remember me
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-sec">Update</button>
+                                <button type="submit" name="submit" class="btn btn-sec">Update</button>
                               </div>
                             </div>
                           </form>
                         </div>
                         
                         <div role="tabpanel" class="tab-pane fade" id="personal">
-                          <h1>Personal Info</h1>
+                          <h1>Profile Info</h1>
                           <form class="form-horizontal">
                             <div class="form-group">
                               <label for="inputEmail3" class="col-sm-3 control-label">First Name*</label>
@@ -427,84 +421,8 @@
 				</section>
 			
 	
- 
-			<footer id="footer" class="color color-secondary">
-				<div class="container">
-					<div class="row">
-						<div class="footer-ribbon">
-							<span>Get in Touch</span>
-						</div>
-						<div class="col-md-3">
-							<div class="newsletter">
-								<h4>Newsletter</h4>
-								<p>Keep up on our always evolving product features and technology. Enter your e-mail and subscribe to our newsletter.</p>
+    <?php include_once "template/footer.php"; ?>
 			
-								<div class="alert alert-success hidden" id="newsletterSuccess">
-									<strong>Success!</strong> You've been added to our email list.
-								</div>
-			
-								<div class="alert alert-danger hidden" id="newsletterError"></div>
-			
-								<form id="newsletterForm" action="php/newsletter-subscribe.php" method="POST">
-									<div class="input-group">
-										<input class="form-control" placeholder="Email Address" name="newsletterEmail" id="newsletterEmail" type="text">
-										<span class="input-group-btn">
-											<button class="btn btn-default" type="submit">Go!</button>
-										</span>
-									</div>
-								</form>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<h4>Latest Tweets</h4>
-							<div id="tweet" class="twitter" data-plugin-tweets data-plugin-options='{"username": "", "count": 2}'>
-								<p>Please wait...</p>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="contact-details">
-								<h4>Contact Us</h4>
-								<ul class="contact">
-									<li><p><i class="fa fa-map-marker"></i> <strong>Address:</strong> 1234 Street Name, City Name, United States</p></li>
-									<li><p><i class="fa fa-phone"></i> <strong>Phone:</strong> (123) 456-789</p></li>
-									<li><p><i class="fa fa-envelope"></i> <strong>Email:</strong> <a href="mailto:mail@example.com">mail@example.com</a></p></li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<h4>Follow Us</h4>
-							<ul class="social-icons">
-								<li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-								<li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-								<li class="social-icons-linkedin"><a href="http://www.linkedin.com/" target="_blank" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="footer-copyright">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-2">
-								<a href="index.html" class="logo">
-									<img alt="BusyBodies" class="img-responsive" src="img/logo-footer.png">
-								</a>
-							</div>
-							<div class="col-md-6">
-								<p>© Copyright 2016. All Rights Reserved.</p>
-							</div>
-							<div class="col-md-4">
-								<nav id="sub-menu">
-									<ul>
-										<li><a href="page-faq.html">FAQ's</a></li>
-										<li><a href="sitemap.html">Sitemap</a></li>
-										<li><a href="contact-us.html">Contact</a></li>
-									</ul>
-								</nav>
-							</div>
-						</div>
-					</div>
-				</div>
-			</footer>
 		</div>
 
 		<!-- Vendor -->
