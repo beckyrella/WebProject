@@ -16,6 +16,26 @@ if(isset($_POST['submitted']))
     echo "Personal Details Updated";
    }
 }
+$profiledata = $membersite->GetProfileDetails();
+if(isset($_POST['submittedprofile']))
+{
+   if($membersite->UpdateProfileDetails())
+   {
+     //change to update page saying its being updated
+       // $membersite->RedirectToURL("thankYou.php");
+     echo "Profile Updated Successfully";
+   }
+}
+
+if(isset($_POST['submittedpassword']))
+{
+   if($membersite->UpdatePasswordDetails())
+   {
+     //change to update page saying its being updated
+       // $membersite->RedirectToURL("thankYou.php");
+     echo "Password Updated Successfully";
+   }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -103,7 +123,7 @@ if(isset($_POST['submitted']))
                         <ul id="myTabs" class="nav nav-pills nav-stacked" role="tablist">
                           <li role="presentation" class="active"><a href="#account" aria-controls="account" role="tab" data-toggle="tab">Account Details</a></li>
                           <li role="presentation"><a href="#personal" aria-controls="personal" role="tab" data-toggle="tab">Profile Details</a></li>
-                          <li role="presentation"><a href="#password" aria-controls="personal" role="tab" data-toggle="tab">Change Password</a></li>
+                          <li role="presentation"><a href="#password" aria-controls="personal" role="tab" data-toggle="tab">Password</a></li>
                           <li role="presentation"><a href="#deactivate" aria-controls="personal" role="tab" data-toggle="tab">Deactivate</a></li>
                         </ul>
                       </div>
@@ -195,50 +215,61 @@ if(isset($_POST['submitted']))
                         </div>
                         
                         <div role="tabpanel" class="tab-pane fade" id="personal">
-                          <h1>Profile Info</h1>
-                          <form class="form-horizontal">
+                          <h1>My Profile Info</h1>
+                          <form class="form-horizontal" id='updateprofiledetail' action='<?php echo $membersite->GetSelfScript(); ?>' method='post' accept-charset='  UTF-8'>
+
+                            <input type='hidden' name='submittedprofile' id='submittedprofile' value='1'/>
+                            <input type='hidden'  class='spmhidip' name='<?php echo $membersite->GetSpamTrapInputName(); ?>' />
+                            <div><span class='pflerror'><?php echo $membersite->GetErrorMessage(); ?></span></div>
+
                             <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-3 control-label">First Name*</label>
+                              <label for="profilename" class="col-sm-3 control-label">Name*</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" id="inputUserName" placeholder="First name">
+                                <input type="text" class="form-control" name="profilename" id="profilename" placeholder="Business Name" value='<?php echo $profiledata['profilename']; ?>' maxlength="50">
                               </div>
                             </div>
                             <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-3 control-label">Email Address*</label>
+                              <label for="profilemobnum" class="col-sm-3 control-label">Mobile Number*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                <input type="text" class="form-control" name="profilemobnum" id="profilemobnum" placeholder="Last Name" value='<?php echo $profiledata['profilemobnum']; ?>' maxlength="70">
                               </div>
                             </div>
                             <div class="form-group">
-                              <label for="mobile" class="col-sm-3 control-label">Mobile Number*</label>
+                              <label for="profileemail" class="col-sm-3 control-label">Email Address*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="mobile" placeholder="Mobile Number">
+                                <input type="email" class="form-control" name="profileemail" id="profileemail" placeholder="Email Address" value='<?php echo $profiledata['profileemail']; ?>' maxlength="50" >
+                              </div>
+                            </div>
+                              <div class="form-group">
+                              <label for="profilehomeadd" class="col-sm-3 control-label">Address*</label>
+                              <div class="col-sm-7">
+                                <input type="text" class="form-control" name="profilehomeadd" id="profilehomeadd" placeholder="Business Address" value='<?php echo $profiledata['profilehomeadd']; ?>' maxlength="150" >
                               </div>
                             </div>
                             <div class="form-group">
-                              <label for="address" class="col-sm-3 control-label">Address*</label>
+                              <label for="profiledesc" class="col-sm-3 control-label">About you*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="address" placeholder="Address">
+                                <input type="text" class="form-control" name="profiledesc" id="profiledesc" placeholder="Description of your services" value='<?php echo $profiledata['profiledesc']; ?>' maxlength="250" >
                               </div>
                             </div>
-                            <div class="form-group">
+                            <!--  <div class="form-group">
                               <label for="city" class="col-sm-3 control-label">City*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="city" placeholder="City">
+                                <input type="text" class="form-control" name="city" id="city" placeholder="City">
                               </div>
                             </div>
                             <div class="form-group">
                               <label for="state" class="col-sm-3 control-label">State*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="city" placeholder="State">
+                                <input type="text" class="form-control" name="state" id="state" placeholder="State">
                               </div>
                             </div>
                             <div class="form-group">
                               <label for="country" class="col-sm-3 control-label">Country*</label>
                               <div class="col-sm-7">
-                                <input type="email" class="form-control" id="city" placeholder="Country">
+                                <input type="text" class="form-control" name="country" id="country" placeholder="Country">
                               </div>
-                            </div>
+                            </div> -->
                             
                             <div class="form-group">
                               <div class="col-sm-offset-3 col-sm-9">
@@ -247,126 +278,11 @@ if(isset($_POST['submitted']))
                                 <p class="help-block">Example block-level help text here.</p>
                               </div>
                             </div>
+                                                  
                             
                             <div class="form-group">
                               <div class="col-sm-offset-3 col-sm-9">
-                                <div class="row">
-                                <div class="col-md-12">
-                                
-                                  <ul class="nav nav-pills sort-source hidden" data-sort-id="portfolio" data-option-key="filter">
-                                    <li data-option-value="*" class="active"><a href="#">Show All</a></li>
-                                    <li data-option-value=".websites" class=""><a href="#">Websites</a></li>
-                                    <li data-option-value=".logos"><a href="#">Logos</a></li>
-                                    <li data-option-value=".brands"><a href="#">Brands</a></li>
-                                  </ul>
-
-                                  <div class="row">
-
-                                    <ul class="image-gallery sort-destination lightbox" data-sort-id="portfolio" data-plugin-options="{&quot;delegate&quot;: &quot;a.lightbox-portfolio&quot;, &quot;type&quot;: &quot;image&quot;, &quot;gallery&quot;: {&quot;enabled&quot;: true}}" style="position: relative; height: 296.5px;">
-                                      <li class="col-md-3 col-sm-6 col-xs-12 isotope-item websites" style="position: absolute; left: 0px; top: 0px;">
-                                        <div class="image-gallery-item">
-                                          <a href="img/projects/project.jpg" class="lightbox-portfolio">
-                                            <span class="thumb-info">
-                                              <span class="thumb-info-wrapper">
-                                                <img src="img/projects/project.jpg" class="img-responsive" alt="">
-                                                
-                                                <span class="thumb-info-action">
-                                                  <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
-                                                </span>
-                                              </span>
-                                            </span>
-                                          </a>
-                                        </div>
-                                      </li>
-                                      <li class="col-md-3 col-sm-6 col-xs-12 isotope-item logos" style="position: absolute; left: 292px; top: 0px;">
-                                        <div class="image-gallery-item">
-                                          <a href="img/projects/project-2.jpg" class="lightbox-portfolio">
-                                            <span class="thumb-info">
-                                              <span class="thumb-info-wrapper">
-                                                <img src="img/projects/project-2.jpg" class="img-responsive" alt="">
-                                                
-                                                <span class="thumb-info-action">
-                                                  <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
-                                                </span>
-                                              </span>
-                                            </span>
-                                          </a>
-                                        </div>
-                                      </li>
-                                      <li class="col-md-3 col-sm-6 col-xs-12 isotope-item brands" style="position: absolute; left: 585px; top: 0px;">
-                                        <div class="image-gallery-item">
-                                          <a href="img/projects/project-4.jpg" class="lightbox-portfolio">
-                                            <span class="thumb-info">
-                                              <span class="thumb-info-wrapper">
-                                                <img src="img/projects/project-4.jpg" class="img-responsive" alt="">
-                                                
-                                                <span class="thumb-info-action">
-                                                  <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
-                                                </span>
-                                              </span>
-                                            </span>
-                                          </a>
-                                        </div>
-                                      </li>
-                                      <li class="col-md-3 col-sm-6 col-xs-12 isotope-item websites" style="position: absolute; left: 877px; top: 0px;">
-                                        <div class="image-gallery-item">
-                                          <a href="img/projects/project-5.jpg" class="lightbox-portfolio">
-                                            <span class="thumb-info">
-                                              <span class="thumb-info-wrapper">
-                                                <img src="img/projects/project-5.jpg" class="img-responsive" alt="">
-                                                
-                                                <span class="thumb-info-action">
-                                                  <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
-                                                </span>
-                                              </span>
-                                            </span>
-                                          </a>
-                                        </div>
-                                      </li>
-                                      
-                                      <li class="col-md-3 col-sm-6 col-xs-12 isotope-item websites" style="position: absolute; left: 877px; top: 0px;">
-                                        <div class="image-gallery-item">
-                                          <a href="img/projects/project-5.jpg" class="lightbox-portfolio">
-                                            <span class="thumb-info">
-                                              <span class="thumb-info-wrapper">
-                                                <img src="img/projects/project-5.jpg" class="img-responsive" alt="">
-                                                
-                                                <span class="thumb-info-action">
-                                                  <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
-                                                </span>
-                                              </span>
-                                            </span>
-                                          </a>
-                                        </div>
-                                      </li>
-                                      <li class="col-md-3 col-sm-6 col-xs-12 isotope-item websites" style="position: absolute; left: 877px; top: 0px;">
-                                        <div class="image-gallery-item">
-                                          <a href="img/projects/project-5.jpg" class="lightbox-portfolio">
-                                            <span class="thumb-info">
-                                              <span class="thumb-info-wrapper">
-                                                <img src="img/projects/project-5.jpg" class="img-responsive" alt="">
-                                                
-                                                <span class="thumb-info-action">
-                                                  <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
-                                                </span>
-                                              </span>
-                                            </span>
-                                          </a>
-                                        </div>
-                                      </li>
-                                      
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>   
-                              </div>
-                            </div>
-                            
-                            
-                            
-                            <div class="form-group">
-                              <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-sec">Update</button>
+                                <button type="submit" class="btn btn-sec" name='Submit'>Update</button>
                               </div>
                             </div>
                           </form>
@@ -374,29 +290,35 @@ if(isset($_POST['submitted']))
                         
                         <div role="tabpanel" class="tab-pane fade" id="password">
                           <h1>Change Password</h1>
-                          <form class="form-horizontal">
+                          <form class="form-horizontal" id='updatepassworddetail' action='<?php echo $membersite->GetSelfScript(); ?>' method='post' accept-charset='UTF-8'>
+                          
+                            <input type='hidden' name='submittedpassword' id='submittedpassword' value='1'/>
+                            <input type='hidden'  class='spmhidip' name='<?php echo $membersite->GetSpamTrapInputName(); ?>' />
+
+
                             <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-3 control-label">Current Password*</label>
+                              <label for="currentpassword" class="col-sm-3 control-label">Current Password*</label>
                               <div class="col-sm-7">
-                                <input type="password" class="form-control" id="inputUserName" placeholder="">
+                                <input type="password" class="form-control" name="currentpassword" id="currentpassword" value='<?php echo $membersite->SafeDisplay('currentpassword')?>' maxlength="50">
                               </div>
                             </div>
                             <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-3 control-label">New Password*</label>
+                              <label for="newpassword" class="col-sm-3 control-label">New Password*</label>
                               <div class="col-sm-7">
-                                <input type="password" class="form-control" id="inputEmail3" placeholder="">
+                                <input type="password" class="form-control" name="newpassword" id="newpassword" value='<?php echo $membersite->SafeDisplay('newpassword') ?>' maxlength="50">
                               </div>
                             </div>
                             <div class="form-group">
-                              <label for="mobile" class="col-sm-3 control-label">Confirm Password*</label>
+                              <label for="newpasswordrepeat" class="col-sm-3 control-label">Confirm New Password*</label>
                               <div class="col-sm-7">
-                                <input type="password" class="form-control" id="mobile" placeholder="">
+                                <input type="password" class="form-control" name="newpasswordrepeat" id="newpasswordrepeat"  value='<?php echo $membersite->SafeDisplay('newpasswordrepeat') ?>' maxlength="50">
                               </div>
                             </div>
+
                             
                             <div class="form-group">
                               <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-sec">Change Password</button>
+                                <button type="submit" name='Submit' class="btn btn-sec">Change Password</button>
                               </div>
                             </div>
                           </form>

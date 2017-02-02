@@ -852,8 +852,8 @@ class Membersite
 		$profiledetails['profileemail'] = $this->Sanitize($_POST['profileemail']);
         $profiledetails['profilehomeadd'] = $this->Sanitize($_POST['profilehomeadd']);
 		$profiledetails['profilecity'] = $this->Sanitize($_POST['city']);
-		$profiledetails['profilestate'] = $this->Sanitize($_POST['state']);
-        $profiledetails['profilecountry'] = $this->Sanitize($_POST['country']);
+		// $profiledetails['profilestate'] = $this->Sanitize($_POST['state']);
+  //       $profiledetails['profilecountry'] = $this->Sanitize($_POST['country']);
         $profiledetails['profiledesc'] = $this->Sanitize($_POST['profiledesc']);  
     }
 	
@@ -1272,7 +1272,9 @@ class Membersite
 		$profilemobnum = $this->SanitizeForSQL($profiledetails['profilemobnum']);
 		$profileemail = $this->SanitizeForSQL($profiledetails['profileemail']);
 		$profilehomeadd = 	 $this->SanitizeForSQL($profiledetails['profilehomeadd']);
-		$profilecity = $this->SanitizeForSQL($profiledetails['profilecity']);
+		// $profilecity = $this->SanitizeForSQL($profiledetails['profilecity']);
+
+        //the below was commented out prior to today
 		// $profilestate = $this->SanitizeForSQL($profiledetails['profilestate']);
 		// $profilecountry = $this->SanitizeForSQL($profiledetails['profilecountry']);
 		$profiledesc = $this->SanitizeForSQL($profiledetails['profiledesc']);
@@ -1286,7 +1288,7 @@ class Membersite
 		
 		//for these the users select a name but we should be saving a i.e number field
 		//plus we only store city not the others because we can populate them if we know the city code
-		$profilecity = !empty($profilecity) ? "$profilecity" : "NULL";
+		// $profilecity = !empty($profilecity) ? "$profilecity" : "NULL";
 		// $profilestate = !empty($profilestate) ? '$profilestate' : NULL;
 		// $profilecountry = !empty($profilecountry) ? '$profilecountry' : NULL;
 		
@@ -1294,10 +1296,14 @@ class Membersite
 		// SET USR_PASSWORD="' . $encrypted_password . '",
 		// USR_SALT="' . $salt . '"
 		// WHERE USR_ID="'.$id.'"';
-
-        echo "<script type='text/javascript'>alert('$profilecity');</script>";
+//
+        // echo "<script type='text/javascript'>alert('$profilecity');</script>";
 		
-		$update_query = 'UPDATE profile SET PFL_NAME="'.$profilename.'", PFL_MOBILENUMBER="'.$profilemobnum.'", PFL_EMAILADDRESS="'.$profileemail.'", PFL_ADDRESS="'.$profilehomeadd.'", CTY_ID='.$profilecity.', PFL_DESCRIPTION="'.$profiledesc.'" WHERE USR_ID="'.$uid.'"';
+		// $update_query = 'UPDATE profile SET PFL_NAME="'.$profilename.'", PFL_MOBILENUMBER="'.$profilemobnum.'", PFL_EMAILADDRESS="'.$profileemail.'", PFL_ADDRESS="'.$profilehomeadd.'", CTY_ID='.$profilecity.', PFL_DESCRIPTION="'.$profiledesc.'" WHERE USR_ID="'.$uid.'"';
+
+        //without city for now
+
+        $update_query = 'UPDATE profile SET PFL_NAME="'.$profilename.'", PFL_MOBILENUMBER="'.$profilemobnum.'", PFL_EMAILADDRESS="'.$profileemail.'", PFL_ADDRESS="'.$profilehomeadd.'", PFL_DESCRIPTION="'.$profiledesc.'" WHERE USR_ID="'.$uid.'"';
 		
 		// CTY_ID=".$profilecity." 
 
