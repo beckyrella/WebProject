@@ -1,0 +1,53 @@
+//unfinished code to add multiple profile images
+if(isset($_POST['submittedprofile']))
+{
+   // $target = "profileImages/".basename($_FILES['profileimage']['profileimagetitle']);
+    extract($_POST);
+    $error=array();
+    $extension=array("jpeg","jpg","png","gif");
+    foreach($_FILES["profileimage"]["tmp_name"] as $key=>$tmp_name)
+            {
+                $file_name=$_FILES["profileimage"]["name"][$key];
+                $file_tmp=$_FILES["profileimage"]["tmp_name"][$key];
+                $ext=pathinfo($file_name,PATHINFO_EXTENSION);
+                if(in_array($ext,$extension))
+                {
+                    if(!file_exists("profileImages/".$txtGalleryName."/".$file_name))
+                    {
+                        move_uploaded_file($file_tmp=$_FILES["profileimage"]["tmp_name"][$key],"profileImages/".$txtGalleryName."/".$file_name);
+                    }
+                    else
+                    {
+                        $filename=basename($file_name,$ext);
+                        $newFileName=$filename.time().".".$ext;
+                        move_uploaded_file($file_tmp=$_FILES["profileimage"]["tmp_name"][$key],"profileImages/".$txtGalleryName."/".$newFileName);
+                    }
+                }
+                else
+                {
+                    array_push($error,"$file_name, ");
+                }
+            }
+            
+   if($membersite->UpdateProfileDetails())
+   {
+     //change to update page saying its being updated
+       // $membersite->RedirectToURL("thankYou.php");
+     echo "Profile Updated Successfully";
+   }
+}
+
+
+		//html form part
+	    <div class="form-group">
+	      <div class="col-sm-offset-3 col-sm-9">
+	        <label for="profileimage">File input</label>
+	        <input type="file" id="profileimage" name="profileimage[]" multiple="multiple">
+	        <textarea id="profileimagetitle" name="profileimagetitle" cols="20" rows="3" placeholder="Say something about this image"></textarea>
+	      </div>
+	    </div>
+                                         
+
+
+
+//finished

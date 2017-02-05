@@ -854,7 +854,8 @@ class Membersite
 		$profiledetails['profilecity'] = $this->Sanitize($_POST['city']);
 		// $profiledetails['profilestate'] = $this->Sanitize($_POST['state']);
   //       $profiledetails['profilecountry'] = $this->Sanitize($_POST['country']);
-        $profiledetails['profiledesc'] = $this->Sanitize($_POST['profiledesc']);  
+        // $profiledetails['profiledesc'] = $this->Sanitize($_POST['profiledesc']);
+        // $profiledetails['profileimagetitle']  = $this->Sanitize($_POST['profileimagetitle']);
     }
 	
 	function CollectPasswordDetailUpdateSubmission(&$passworddetails)
@@ -1628,8 +1629,44 @@ class Membersite
 		
 		return true;
 	}
-	
-	
+
+    function FetchAllCities()
+    {
+        if(!$this->DBLogin())
+        {
+            $this->HandleError("Database login failed!");
+            // echo '<script type="text/javascript">alert("Database login failed!");</script>';
+            return false;
+        }
+        
+        $citytablename = "city";
+        // $this->$citytablename
+        if(!$this->ensuretable($citytablename))
+        {
+            $this->HandleDBError("Error finding table");
+            // echo '<script type="text/javascript">alert("Error finding table!");</script>';
+            return false;
+        }
+
+        $city_query = 'SELECT CTY_ID, CTY_NAME FROM CITY ORDER BY CTY_NAME';
+        
+        $cityresult = mysqli_query($this->connection,  $city_query);
+        if(!$cityresult)
+        {
+            $this->HandleDBError("Error selecting city data");
+            // echo '<script type="text/javascript">alert("Error selecting ci");</script>';
+            return false;
+        }        
+
+        while($row=mysqli_fetch_assoc($cityresult))
+        {
+            $id=$row['CTY_ID'];
+            $data=$row['CTY_NAME'];
+            echo '<option value="'.$id.'">'.$data.'</option>';
+        } 
+
+        return true;
+    }
 	
 	//the end
 

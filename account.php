@@ -16,6 +16,8 @@ if(isset($_POST['submitted']))
     echo "Personal Details Updated";
    }
 }
+
+// saving profile deetss
 $profiledata = $membersite->GetProfileDetails();
 if(isset($_POST['submittedprofile']))
 {
@@ -61,12 +63,17 @@ if(isset($_POST['submittedpassword']))
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CShadows+Into+Light" rel="stylesheet" type="text/css">
 
 		<!-- Vendor CSS -->
+
+    <!-- //mine -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <!-- end -->
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css">
 		<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.css">
 		<link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
 		<link rel="stylesheet" href="vendor/owl.carousel/assets/owl.carousel.min.css">
 		<link rel="stylesheet" href="vendor/owl.carousel/assets/owl.theme.default.min.css">
 		<link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css">
+    
 
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="css/theme.css">
@@ -103,7 +110,7 @@ if(isset($_POST['submittedpassword']))
 					<div class="container ">
             <ol class="breadcrumb">
               <li><a href="#">Home</a></li>
-              <li><a href="#">Profile</a></li>
+              <li><a href="testerautocomplete.php">Profile</a></li>
               <li class="active">My Account</li>
             </ol>
 					</div>
@@ -246,39 +253,50 @@ if(isset($_POST['submittedpassword']))
                                 <input type="text" class="form-control" name="profilehomeadd" id="profilehomeadd" placeholder="Business Address" value='<?php echo $profiledata['profilehomeadd']; ?>' maxlength="150" >
                               </div>
                             </div>
+                            <!-- //working on  -->
                             <div class="form-group">
+                            <label for="city" class="col-sm-3 control-label">City*</label>
+                            <div class="col-sm-7">
+                              <input type="hidden" name="profileselectedcityid" id="profileselectedcityid" value=''/>
+                              <select type="text" class="form-control" name="profilecity" id="profilecity" placeholder="City">
+                                <option selected="selected">--Select City--</option>
+                                <?php 
+                                  if(!$membersite->FetchAllCities())
+                                  { 
+                                    echo '<script type="text/javascript">alert("ERROR");</script>';
+                                  } 
+                                ?>
+                            </select>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="state" class="col-sm-3 control-label">State*</label>
+                            <div class="col-sm-7">
+                            <input type="hidden" name="profileselectedstateid" id="profileselectedstateid" value=''/>
+                            <select type="text" class="form-control" name="profilestate" id="profilestate" placeholder="City">
+                                <option selected="selected">--Select State--</option>
+                            </select>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="country" class="col-sm-3 control-label">Country*</label>
+                            <div class="col-sm-7">
+                            <input type="hidden" name="profileselectedcountryid" id="profileselectedcountryid" value=''/>
+                            <select type="text" class="form-control" name="profilecountry" id="profilecountry" placeholder="City">
+                               <option selected="selected">--Select Country--</option>
+                            </select>
+                            </div>
+                          </div>
+
+                           <div class="form-group">
                               <label for="profiledesc" class="col-sm-3 control-label">About you*</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" name="profiledesc" id="profiledesc" placeholder="Description of your services" value='<?php echo $profiledata['profiledesc']; ?>' maxlength="250" >
+                                <textarea class="form-control" name="profiledesc" id="profiledesc" placeholder="Description of your services" value='<?php echo $profiledata['profiledesc']; ?>' maxlength="250" rows="5" cols="50"></textarea>
                               </div>
                             </div>
-                            <!--  <div class="form-group">
-                              <label for="city" class="col-sm-3 control-label">City*</label>
-                              <div class="col-sm-7">
-                                <input type="text" class="form-control" name="city" id="city" placeholder="City">
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label for="state" class="col-sm-3 control-label">State*</label>
-                              <div class="col-sm-7">
-                                <input type="text" class="form-control" name="state" id="state" placeholder="State">
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label for="country" class="col-sm-3 control-label">Country*</label>
-                              <div class="col-sm-7">
-                                <input type="text" class="form-control" name="country" id="country" placeholder="Country">
-                              </div>
-                            </div> -->
-                            
-                            <div class="form-group">
-                              <div class="col-sm-offset-3 col-sm-9">
-                                <label for="exampleInputFile">File input</label>
-                                <input type="file" id="exampleInputFile">
-                                <p class="help-block">Example block-level help text here.</p>
-                              </div>
-                            </div>
-                                                  
+                    
                             
                             <div class="form-group">
                               <div class="col-sm-offset-3 col-sm-9">
@@ -287,6 +305,8 @@ if(isset($_POST['submittedpassword']))
                             </div>
                           </form>
                         </div>
+
+
                         
                         <div role="tabpanel" class="tab-pane fade" id="password">
                           <h1>Change Password</h1>
@@ -348,7 +368,10 @@ if(isset($_POST['submittedpassword']))
 		</div>
 
 		<!-- Vendor -->
-		<script src="vendor/jquery/jquery.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<!-- <script src="vendor/jquery/jquery.js"></script> -->
 		<script src="vendor/jquery.appear/jquery.appear.js"></script>
 		<script src="vendor/jquery.easing/jquery.easing.js"></script>
 		<script src="vendor/jquery-cookie/jquery-cookie.js"></script>
@@ -363,6 +386,8 @@ if(isset($_POST['submittedpassword']))
 		<script src="vendor/owl.carousel/owl.carousel.js"></script>
 		<script src="vendor/magnific-popup/jquery.magnific-popup.js"></script>
 		<script src="vendor/vide/vide.js"></script>
+
+
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="js/theme.js"></script>
@@ -390,36 +415,66 @@ if(isset($_POST['submittedpassword']))
 			ga('send', 'pageview');
 		</script>
 		 -->
-     
-     	<script>
+
+     <!-- //hi -->
+    <script type="text/javascript">
+        function stateFunction() {
+            $('#profilecity').change(function() {
+              var id=$(this).val();
+              var dataString = id;
+
+            $.ajax
+              ({
+                type: "GET",
+                url: "locationautocomplete.php",
+                dataType:'json',
+                data: {datatext: dataString, type: 'cityselect'},
+                cache: false,
+                success: function(data) { 
+                  $('#profilestate').html(data.message1); 
+                  $('#profilecountry').html(data.message2);        
+                },
+                error: function(xhr, status, error) { alert("Hello! ERROR!" + error); }
+              });
+
+            });
+        }
+
+        $(document).ready(function()
+        {
+          stateFunction();    
+        });
+    </script>
+
+    <script>
 	  
-	  $(document).ready(function () {
-		var menu = $('.member-since');
-		var origOffsetY = menu.offset().top;
-    $('.hidden_header').addClass('hidden');
-	
-		function scroll() {
-		  if ($(window).scrollTop() >= origOffsetY) {
-			$('.hidden_header').removeClass('hidden');
-      $('#header').addClass('hidden');
-			$('.hidden_header').addClass('sticky');
-			  //$('.content').addClass('menu-padding');
-		  } else {
-			$('.hidden_header').addClass('hidden');
-			$('.always_active').addClass('active');
-      $('#header').removeClass('hidden');
-			$('.hidden_header').removeClass('sticky');	
-			  //$('.content').removeClass('menu-padding');
-		  }	
-		}
-		document.onscroll = scroll;
-    
-    $('#myTabs a').click(function (e) {
-      e.preventDefault()
-      $(this).tab('show')
-    })
-    
-    });
+  	  $(document).ready(function () {
+  		var menu = $('.member-since');
+  		var origOffsetY = menu.offset().top;
+      $('.hidden_header').addClass('hidden');
+  	
+  		function scroll() {
+  		  if ($(window).scrollTop() >= origOffsetY) {
+  			$('.hidden_header').removeClass('hidden');
+        $('#header').addClass('hidden');
+  			$('.hidden_header').addClass('sticky');
+  			  //$('.content').addClass('menu-padding');
+  		  } else {
+  			$('.hidden_header').addClass('hidden');
+  			$('.always_active').addClass('active');
+        $('#header').removeClass('hidden');
+  			$('.hidden_header').removeClass('sticky');	
+  			  //$('.content').removeClass('menu-padding');
+  		  }	
+  		}
+  		document.onscroll = scroll;
+      
+      $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+      })
+      
+      });
 
     </script>
 
