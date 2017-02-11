@@ -1,5 +1,6 @@
 <?PHP
 require_once("include/membersite_config.php");
+require_once("include/DbConfig.php");
 
 if(!$membersite->CheckLogin())
 {
@@ -162,13 +163,14 @@ if(isset($_POST['submittedpassword']))
                             <div class="form-group">
                               <label for="dob" class="col-sm-3 control-label">Date of Birth*</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" name="dob" id="dob" placeholder="Birthdate" value='<?php echo $userdata['dateofbirth']; ?>' maxlength="50" >
+                                <input type="date" class="form-control" name="dob" id="dob" placeholder="Birthdate" value='<?php echo $userdata['dateofbirth']; ?>' maxlength="50" >
                               </div>
                             </div>
-                              <div class="form-group">
+                             <div class="form-group">
                               <label for="sex" class="col-sm-3 control-label">Gender*</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" name="sex" id="sex" placeholder="Gender" value='<?php echo $userdata['sex']; ?>' maxlength="50" >
+                                 <input type="radio" name="sex" id="sex"  <?php if (isset($userdata['sex']) && $userdata['sex']==1) echo "checked";?> value="1"> Female 
+                                <input type="radio" name="sex" id="sex" <?php if (isset($userdata['sex']) && $userdata['sex']==2) echo "checked";?> value="2">Male
                               </div>
                             </div>
                             <div class="form-group">
@@ -186,33 +188,49 @@ if(isset($_POST['submittedpassword']))
                             <div class="form-group">
                               <label for="mobilenumber" class="col-sm-3 control-label">Mobile Number*</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" name="mobilenumber" id="mobilenumber" placeholder="Mobile Number" value='<?php echo $userdata['mobilenumber']; ?>' maxlength="50">
+                                <input type="number" class="form-control" name="mobilenumber" id="mobilenumber" placeholder="080xxxxxxxx" value='<?php echo $userdata['mobilenumber']; ?>' pattern="[0-9]{11}" maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  >
                               </div>
                             </div>
                             <div class="form-group">
                               <label for="address" class="col-sm-3 control-label">Address*</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" name="address" id="address" placeholder="Address" value='<?php echo $userdata['address']; ?>' maxlength="50" >
+                                <input type="text" class="form-control" name="address" id="address" placeholder="Address" value='<?php echo $userdata['address']; ?>' maxlength="250" >
                               </div>
                             </div>
-                           <!--  <div class="form-group">
+
+                            <div class="form-group">
                               <label for="city" class="col-sm-3 control-label">City*</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" name="city" id="city" placeholder="City">
-                              </div>
+                                <select type="text" class="form-control" name="usercity" id="usercity" placeholder="City">
+                                  <option selected="selected" value="">--Select City--</option>
+                                  <?php 
+                                  $isprofile = false;
+                                    if(!$membersite->FetchAllCities($isprofile))
+                                    { 
+                                      echo '<script type="text/javascript">alert("ERROR");</script>';
+                                    }                           
+                                  ?>
+                              </select>
                             </div>
-                            <div class="form-group">
-                              <label for="state" class="col-sm-3 control-label">State*</label>
-                              <div class="col-sm-7">
-                                <input type="text" class="form-control" name="state" id="state" placeholder="State">
-                              </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="state" class="col-sm-3 control-label">State*</label>
+                            <div class="col-sm-7">
+                            <select type="text" class="form-control" name="userstate" id="userstate" placeholder="State">
+                                <option selected="selected" value="">--Select your State--</option>
+                            </select>
                             </div>
-                            <div class="form-group">
-                              <label for="country" class="col-sm-3 control-label">Country*</label>
-                              <div class="col-sm-7">
-                                <input type="text" class="form-control" name="country" id="country" placeholder="Country">
-                              </div>
-                            </div> -->
+                          </div>
+
+                          <div class="form-group">
+                            <label for="country" class="col-sm-3 control-label">Country*</label>
+                            <div class="col-sm-7">
+                            <select type="text" class="form-control" name="usercountry" id="usercountry" placeholder="City">
+                               <option selected="selected" value="">--Select your Country--</option>
+                            </select>
+                            </div>
+                          </div>
                             <div class="form-group">
                               <div class="col-sm-offset-3 col-sm-9">
                                 <button type="submit" name="submit" class="btn btn-sec">Update</button>
@@ -238,7 +256,7 @@ if(isset($_POST['submittedpassword']))
                             <div class="form-group">
                               <label for="profilemobnum" class="col-sm-3 control-label">Mobile Number*</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" name="profilemobnum" id="profilemobnum" placeholder="Last Name" value='<?php echo $profiledata['profilemobnum']; ?>' maxlength="70">
+                                <input type="number" class="form-control" name="profilemobnum" id="profilemobnum" placeholder="Last Name" value='<?php echo $profiledata['profilemobnum']; ?>'  pattern="[0-9]{11}" maxlength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" >
                               </div>
                             </div>
                             <div class="form-group">
@@ -257,11 +275,11 @@ if(isset($_POST['submittedpassword']))
                             <div class="form-group">
                             <label for="city" class="col-sm-3 control-label">City*</label>
                             <div class="col-sm-7">
-                              <input type="hidden" name="profileselectedcityid" id="profileselectedcityid" value=''/>
                               <select type="text" class="form-control" name="profilecity" id="profilecity" placeholder="City">
                                 <option selected="selected">--Select City--</option>
                                 <?php 
-                                  if(!$membersite->FetchAllCities())
+                                  $isprofile = true;
+                                  if(!$membersite->FetchAllCities($isprofile))
                                   { 
                                     echo '<script type="text/javascript">alert("ERROR");</script>';
                                   } 
@@ -273,7 +291,6 @@ if(isset($_POST['submittedpassword']))
                           <div class="form-group">
                             <label for="state" class="col-sm-3 control-label">State*</label>
                             <div class="col-sm-7">
-                            <input type="hidden" name="profileselectedstateid" id="profileselectedstateid" value=''/>
                             <select type="text" class="form-control" name="profilestate" id="profilestate" placeholder="City">
                                 <option selected="selected">--Select State--</option>
                             </select>
@@ -283,7 +300,6 @@ if(isset($_POST['submittedpassword']))
                           <div class="form-group">
                             <label for="country" class="col-sm-3 control-label">Country*</label>
                             <div class="col-sm-7">
-                            <input type="hidden" name="profileselectedcountryid" id="profileselectedcountryid" value=''/>
                             <select type="text" class="form-control" name="profilecountry" id="profilecountry" placeholder="City">
                                <option selected="selected">--Select Country--</option>
                             </select>
@@ -293,7 +309,7 @@ if(isset($_POST['submittedpassword']))
                            <div class="form-group">
                               <label for="profiledesc" class="col-sm-3 control-label">About you*</label>
                               <div class="col-sm-7">
-                                <textarea class="form-control" name="profiledesc" id="profiledesc" placeholder="Description of your services" value='<?php echo $profiledata['profiledesc']; ?>' maxlength="250" rows="5" cols="50"></textarea>
+                                <input type="text" class="form-control" name="profiledesc" id="profiledesc" placeholder="Description of your services" value='<?php echo $profiledata['profiledesc']; ?>' maxlength="250" rows="5" cols="50">
                               </div>
                             </div>
                     
@@ -417,9 +433,12 @@ if(isset($_POST['submittedpassword']))
 		 -->
 
      <!-- //hi -->
+
+
+
+
     <script type="text/javascript">
-        function stateFunction() {
-            $('#profilecity').change(function() {
+        function profileLocationFunction() {
               var id=$(this).val();
               var dataString = id;
 
@@ -437,13 +456,33 @@ if(isset($_POST['submittedpassword']))
                 error: function(xhr, status, error) { alert("Hello! ERROR!" + error); }
               });
 
-            });
         }
 
-        $(document).ready(function()
-        {
-          stateFunction();    
+        function userLocationFunction() {
+                var id = $(this).val();
+                var dataString = id;
+                $.ajax({
+                  type: "GET",
+                  url: "locationautocomplete.php",
+                  dataType: 'json',
+                  data: { datatext: dataString, type: 'cityselect' },
+                  cache: false,
+                  success: function(data) {
+                    $('#userstate').html(data.message1);
+                    $('#usercountry').html(data.message2);
+                  },
+                  error: function(xhr, status, error) { alert("Hello! ERROR!" + error);
+                  }
+                });
+        }
+
+
+        $(document).ready(function() {
+               $('#usercity').change(userLocationFunction).change();
+               $('#profilecity').change(profileLocationFunction).change();
+
         });
+
     </script>
 
     <script>

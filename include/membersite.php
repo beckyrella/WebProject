@@ -34,6 +34,12 @@ class Membersite
     var $rand_key;
     
     var $error_message;
+
+    var $inferredstateid = "";
+    var $inferredstatename = "";
+    var $inferredcountryid = "";
+    var $inferredcountryname = "";
+    var $hasfetchedcity = false;
     
     //-----Initialization -------
     function Membersite()
@@ -835,7 +841,7 @@ class Membersite
         $personaldetails['address'] = $this->Sanitize($_POST['address']);
         $personaldetails['email'] = $this->Sanitize($_POST['email']);
         //todo commented out because i havent added the fields yet
-        //$personaldetails['city'] = $this->Sanitize($_POST['city']); 
+        $personaldetails['city'] = $this->Sanitize($_POST['usercity']); 
 
         //state and country to check
         //$personaldetails['state'] = $this->Sanitize($_POST['state']); 
@@ -851,10 +857,10 @@ class Membersite
 		$profiledetails['profilemobnum'] = $this->Sanitize($_POST['profilemobnum']);
 		$profiledetails['profileemail'] = $this->Sanitize($_POST['profileemail']);
         $profiledetails['profilehomeadd'] = $this->Sanitize($_POST['profilehomeadd']);
-		$profiledetails['profilecity'] = $this->Sanitize($_POST['city']);
+		$profiledetails['profilecity'] = $this->Sanitize($_POST['profilecity']);
 		// $profiledetails['profilestate'] = $this->Sanitize($_POST['state']);
-  //       $profiledetails['profilecountry'] = $this->Sanitize($_POST['country']);
-        // $profiledetails['profiledesc'] = $this->Sanitize($_POST['profiledesc']);
+        //$profiledetails['profilecountry'] = $this->Sanitize($_POST['country']);
+        $profiledetails['profiledesc'] = $this->Sanitize($_POST['profiledesc']);
         // $profiledetails['profileimagetitle']  = $this->Sanitize($_POST['profileimagetitle']);
     }
 	
@@ -1242,6 +1248,7 @@ class Membersite
 		$mobn = $this->SanitizeForSQL($personaldetails['mobilenumber']);
 		$hadd = $this->SanitizeForSQL($personaldetails['address']);
 		$emailadd = $this->SanitizeForSQL($personaldetails['email']);
+        $city = $this->SanitizeForSQL($personaldetails['city']);
 		
 		//because these will never be empty
 		//$fname = !empty($fname) ? "'$fname'" : "NULL";
@@ -1252,10 +1259,15 @@ class Membersite
 		$birth = !empty($birth) ? "$birth" : "NULL";
 		$mobn = !empty($mobn) ? "'$mobn'" : "NULL";
 		$hadd = !empty($hadd) ? "'$hadd'" : "NULL";
+        $city = !empty($city) ? "'$city'" : "NULL";
+
 		
-	
-		$update_query = "Update $this->tablename Set USR_FIRSTNAME='".$fname."', USR_LASTNAME='".$lname."', USR_USERNAME='".$uname."', SEX_ID=".$sid.", USR_DATEOFBIRTH='".$birth."', USR_MOBILENUMBER=".$mobn.", USR_HOMEADDRESS=".$hadd.", USR_EMAILADDRESS='".$emailadd."' Where USR_ID=".$uid."";
-		
+	//perhaps dont update email because of phone registrants and people changing emails to unverified emails
+		// $update_query = "Update $this->tablename Set USR_FIRSTNAME='".$fname."', USR_LASTNAME='".$lname."', USR_USERNAME='".$uname."', SEX_ID=".$sid.", USR_DATEOFBIRTH='".$birth."', USR_MOBILENUMBER=".$mobn.", USR_HOMEADDRESS=".$hadd.", USR_EMAILADDRESS='".$emailadd."' Where USR_ID=".$uid."";
+
+        // echo '<script type="text/javascript">alert("UPDATING");</script>';
+        //echo '<script type="text/javascript">alert("'.$sid.'");</script>';
+		$update_query = "Update $this->tablename Set USR_FIRSTNAME='".$fname."', USR_LASTNAME='".$lname."', USR_USERNAME='".$uname."', SEX_ID=".$sid.", USR_DATEOFBIRTH='".$birth."', USR_MOBILENUMBER=".$mobn.", USR_HOMEADDRESS=".$hadd.", USR_EMAILADDRESS='".$emailadd."', CTY_ID=".$city." Where USR_ID=".$uid."";
 
         if(!mysqli_query($this->connection,  $update_query))
         {
@@ -1273,12 +1285,13 @@ class Membersite
 		$profilemobnum = $this->SanitizeForSQL($profiledetails['profilemobnum']);
 		$profileemail = $this->SanitizeForSQL($profiledetails['profileemail']);
 		$profilehomeadd = 	 $this->SanitizeForSQL($profiledetails['profilehomeadd']);
-		// $profilecity = $this->SanitizeForSQL($profiledetails['profilecity']);
+		$profilecity = $this->SanitizeForSQL($profiledetails['profilecity']);
+        $profiledesc = $this->SanitizeForSQL($profiledetails['profiledesc']);
 
         //the below was commented out prior to today
 		// $profilestate = $this->SanitizeForSQL($profiledetails['profilestate']);
 		// $profilecountry = $this->SanitizeForSQL($profiledetails['profilecountry']);
-		$profiledesc = $this->SanitizeForSQL($profiledetails['profiledesc']);
+		
 		
 		
 		$profilename = !empty($profilename) ? "$profilename" : "NULL";
@@ -1286,6 +1299,7 @@ class Membersite
 		$profileemail = !empty($profileemail) ? "$profileemail" : "NULL";
 		$profilehomeadd = !empty($profilehomeadd) ? "$profilehomeadd" : "NULL";
 		$profiledesc = !empty($profiledesc) ? "$profiledesc" : "NULL";
+        $profilecity = !empty($profilecity) ? $profilecity : "NULL";
 		
 		//for these the users select a name but we should be saving a i.e number field
 		//plus we only store city not the others because we can populate them if we know the city code
@@ -1304,7 +1318,7 @@ class Membersite
 
         //without city for now
 
-        $update_query = 'UPDATE profile SET PFL_NAME="'.$profilename.'", PFL_MOBILENUMBER="'.$profilemobnum.'", PFL_EMAILADDRESS="'.$profileemail.'", PFL_ADDRESS="'.$profilehomeadd.'", PFL_DESCRIPTION="'.$profiledesc.'" WHERE USR_ID="'.$uid.'"';
+        $update_query = 'UPDATE profile SET PFL_NAME="'.$profilename.'", PFL_MOBILENUMBER="'.$profilemobnum.'", PFL_EMAILADDRESS="'.$profileemail.'", PFL_ADDRESS="'.$profilehomeadd.'", PFL_DESCRIPTION="'.$profiledesc.'", CTY_ID="'.$profilecity.'" WHERE USR_ID="'.$uid.'"';
 		
 		// CTY_ID=".$profilecity." 
 
@@ -1423,8 +1437,9 @@ class Membersite
 
 			
 			//echo "<script type='text/javascript'>alert('$usersid');</script>";
-			      
-			$result = mysqli_query($this->connection, "select * from $this->tablename where USR_ID='$usersid'");  
+      			      
+			$result = mysqli_query($this->connection, "select * from $this->tablename where USR_ID='$usersid'");
+           
 
 			if(!$result || mysqli_num_rows($result) <= 0)
 			{
@@ -1441,6 +1456,28 @@ class Membersite
 			$accountdetails['dateofbirth'] = $row['USR_DATEOFBIRTH'];
 			$accountdetails['sex'] = $row['SEX_ID'];
 			$accountdetails['address'] = $row['USR_HOMEADDRESS'];
+            $accountdetails['cityid'] = $row['CTY_ID'];
+            
+
+            //echo '<script type="text/javascript">alert("'.$row['SEX_ID'].'");</script>';
+            //city/state/country
+            if (!$accountdetails['cityid'] == null) {
+
+                $scid = $accountdetails['cityid'];
+                $city_query = "SELECT DISTINCT CITY.CTY_ID, CITY.CTY_NAME, STATE.STT_ID, STATE.STT_NAME, COUNTRY.CTR_ID, COUNTRY.CTR_NAME FROM CITY, STATE, COUNTRY, PROFILE WHERE CITY.CTY_ID='".$scid."' AND CITY.STT_ID = STATE.STT_ID AND STATE.CTR_ID = COUNTRY.CTR_ID ORDER BY CITY.CTY_NAME";
+
+                 $locationresult = mysqli_query($this->connection, $city_query) ;
+                 $lrow = mysqli_fetch_assoc($locationresult);
+
+                 $accountdetails['cityname'] = $lrow['CTY_NAME'];
+                 $accountdetails['stateid'] = $lrow['STT_ID'];
+                 $accountdetails['statename'] = $lrow['STT_NAME'];
+                 $accountdetails['ctrid'] = $lrow['CTR_ID'];
+                 $accountdetails['ctrname'] = $lrow['CTR_NAME'];
+            
+           
+            }
+
 			
 			// $nname = $accountdetails['firstname'];
 			// echo "<script type='text/javascript'>alert('$nname');</script>";			
@@ -1485,11 +1522,12 @@ class Membersite
 				$profiledetails['profiledesc'] = $row['PFL_DESCRIPTION']; 
 
 				$selectedcity = $profiledetails['profilecity'];
+                $st = $profiledetails['profiledesc'];
 
 				// if (!empty($selectedcity)) {
 				//     echo "<script type='text/javascript'>alert('$selectedcity');</script>";
 				// }
-
+                // echo "<script type='text/javascript'>alert('".$st."');</script>";
 
 
 				if (!empty($selectedcity)) 
@@ -1511,14 +1549,6 @@ class Membersite
 					$state = $profiledetails['profilestate'];
 					$country = $profiledetails['profilecountry'];
 
-					// if (empty($state)) {
-					//     echo "<script type='text/javascript'>alert('$selectedcity');</script>";
-					// }
-
-					// if (!empty($country)) {
-					//     echo "<script type='text/javascript'>alert('$country');</script>";
-
-						//$this->handleerror("JUST PRINTING: '$state'");
 				}
 				
              return $profiledetails; 
@@ -1630,45 +1660,65 @@ class Membersite
 		return true;
 	}
 
-    function FetchAllCities()
+    function FetchAllCities($isprofile)
     {
         if(!$this->DBLogin())
         {
             $this->HandleError("Database login failed!");
-            // echo '<script type="text/javascript">alert("Database login failed!");</script>';
             return false;
         }
         
         $citytablename = "city";
-        // $this->$citytablename
         if(!$this->ensuretable($citytablename))
         {
             $this->HandleDBError("Error finding table");
             // echo '<script type="text/javascript">alert("Error finding table!");</script>';
             return false;
         }
+        $selectedcityquery = "";
+        $city_query = 'SELECT DISTINCT CTY_ID, CTY_NAME FROM CITY ORDER BY CTY_NAME';
+        $usrid = $_SESSION['id_of_user'];
+        if ($isprofile)
+        {
+            $selectedcityquery = 'SELECT CTY_ID FROM PROFILE WHERE USR_ID="'.$usrid.'"'; 
+             //echo '<script type="text/javascript">alert("IS PROFILE!");</script>';
 
-        $city_query = 'SELECT CTY_ID, CTY_NAME FROM CITY ORDER BY CTY_NAME';
+        }
+        else{
+             $selectedcityquery = 'SELECT CTY_ID FROM USER WHERE USR_ID="'.$usrid.'"'; 
+        }
+                
+
         
         $cityresult = mysqli_query($this->connection,  $city_query);
+        $selectedcityresult = mysqli_query($this->connection,  $selectedcityquery);
+
         if(!$cityresult)
         {
             $this->HandleDBError("Error selecting city data");
-            // echo '<script type="text/javascript">alert("Error selecting ci");</script>';
             return false;
-        }        
+        }
+
+        $selectedcityid = "";
+        while($row=mysqli_fetch_assoc($selectedcityresult))
+        {
+            $selectedcityid = $row['CTY_ID'];           
+        }
 
         while($row=mysqli_fetch_assoc($cityresult))
         {
+            $s = "";
             $id=$row['CTY_ID'];
             $data=$row['CTY_NAME'];
-            echo '<option value="'.$id.'">'.$data.'</option>';
+
+            if ($id == $selectedcityid) { $s="selected='selected'"; }
+
+            echo '<option value="'.$id.'" '.$s.'>'.$data.'</option>'; 
         } 
 
+        //echo '<script type="text/javascript">alert("'.$id.'");</script>';
         return true;
     }
-	
-	//the end
 
 }
 ?>

@@ -1,3 +1,9 @@
+<?PHP
+
+require_once("include/membersite_config.php");
+require_once("include/DbConfig.php");
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -57,7 +63,17 @@
 
 		<div class="body">
 			<!-- check whether logged in or not and decide on header to display -->
-			<?php include_once "template/loggedOutHeader.php"; ?>
+			<?php 
+
+			if(!$membersite->CheckLogin())			{
+			    include_once "template/loggedOutHeader.php";
+			}
+			else{
+				include_once "template/loggedInHeader.php";
+			}
+			
+
+			 ?>
 
 			<div role="main" class="main">
 				<div class="slider-container rev_slider_wrapper">
